@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import use.aspect.interfacep.annotation.ReturnJson;
 import use.aspect.interfacep.interf.IAspectInterface;
 import use.aspect.util.Util;
+import use.common.exception.JsonException;
 import use.common.json.JSONResult;
-import use.common.util.ExceptionUtil;
 /**
  * json返回切面
  * 项目名称:use.aspect.spring
@@ -51,21 +51,19 @@ public class ReturnJsonAspect implements IAspectInterface{
 				json.setData(r);
 			}
 			json.setJsonMessage(an.successMessage());
-			json.setJsonType("success");	
+			json.setJsonType("success");
+			return json;
 		}catch(Exception er)
 		{
 			String info = an.errorMessage()+er.getMessage();
 			json.setJsonType("error");
 			json.setJsonMessage(Util.showAllErrorInfo ? info : info.substring(1, 30));
-			
-			ExceptionUtil.throwError(er, log);
+			throw new JsonException(er , json);
 		} catch (Throwable e) {
 			String info = an.errorMessage()+e.getMessage();
 			json.setJsonType("error");
 			json.setJsonMessage(Util.showAllErrorInfo ? info : info.substring(1, 30));
-			
-			ExceptionUtil.throwError(e, log);
+			throw new JsonException(e , json);
 		}
-		return json;
 	}
 }
