@@ -1,6 +1,5 @@
 package use.aspect.support.controller;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,13 +13,10 @@ import use.aspect.support.service.InvokeService;
 @Controller
 public class ApiInvoke {
 
-	@Resource(name="invokeService")
-	private InvokeService fClass;
-	
 	@RequestMapping("/api.do")
 	@ResponseBody
 	public Object invoke(HttpServletRequest request, HttpServletResponse response, ModelMap map)
 	{
-		return fClass.invoke(request, response , map);
+		return InvokeService.get().invoke(request, response , map);
 	}
 }

@@ -40,7 +40,10 @@ dependencies {
     compile fileTree(dir:'lib',include:'*.jar')
     api 'org.apache.commons:commons-math3:3.6.1'
     
-    	def springVersion = "5.0.5.RELEASE"
+    //compile group: 'cglib', name: 'cglib', version: '3.2.6'
+    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.8.13'
+    
+    def springVersion = "5.0.5.RELEASE"
 	compile("org.springframework:spring-aop:$springVersion",
 			"org.springframework:spring-aspects:$springVersion",
 			"org.springframework:spring-beans:$springVersion",
