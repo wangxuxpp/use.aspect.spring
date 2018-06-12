@@ -12,6 +12,7 @@ import use.aspect.interfacep.annotation.ReturnJson;
 import use.aspect.interfacep.interf.IAspectInterface;
 import use.aspect.util.Util;
 import use.common.exception.JsonException;
+import use.common.exception.SystemException;
 import use.common.json.JSONResult;
 /**
  * json返回切面
@@ -58,12 +59,14 @@ public class ReturnJsonAspect implements IAspectInterface{
 			String info = an.errorMessage()+er.getMessage();
 			json.setJsonType("error");
 			json.setJsonMessage(Util.showAllErrorInfo ? info : info.substring(1, 30));
-			throw new JsonException(er , json);
+			JsonException.threw(er, json);
+			throw new SystemException(er);
 		} catch (Throwable e) {
 			String info = an.errorMessage()+e.getMessage();
 			json.setJsonType("error");
 			json.setJsonMessage(Util.showAllErrorInfo ? info : info.substring(1, 30));
-			throw new JsonException(e , json);
+			JsonException.threw(e, json);
+			throw new SystemException(e);
 		}
 	}
 }
